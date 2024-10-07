@@ -7,7 +7,7 @@ import type { Move } from "chess.js";
 
 interface ChessGameProps {
   playerColor: String;
-  sendMove: (move: Move) => void;
+  sendMove: (from: String, to: String) => void;
   receivedMove: Move | null;
 }
 
@@ -18,11 +18,15 @@ const ChessGame: React.FC<ChessGameProps> = ({
 }) => {
     const { getCurrentGame, resetGame, isGameOver, onDrop} = useChessGame(playerColor,sendMove,receivedMove);
 
+  const currentFen = getCurrentGame().fen();
+
+  console.log("CURRENT FEN : " + currentFen);
+
 
 return (
 <div>
 
-    <Chessboard onPieceDrop={sendMove} boardOrientation={playerColor}/>
+    <Chessboard position={currentFen} onPieceDrop={onDrop} boardOrientation={playerColor}/>
   </div>
 )
   }
