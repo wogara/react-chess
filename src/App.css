@@ -1,0 +1,14 @@
+html, body, #root {
+  height:100%;
+  width:100%;
+  margin:0;
+}
+
+body {
+  background-color: black !important;
+}
+
+#root {
+  /* max-width:100%; */
+  /* padding: 2rem; */
+}
