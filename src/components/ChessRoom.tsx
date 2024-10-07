@@ -36,7 +36,6 @@ interface ChessRoomProps {
 const ChessRoom: React.FC<ChessRoomProps> = ({ playerColor, roomId }) => {
   const [receivedMove, setReceivedMove] = useState(null);
 
-  console.log("PLAYER COLOR: " + playerColor);
   useEffect(() => {
     if (!roomId.length) {
       console.log("NO ROOM ID");
@@ -96,7 +95,6 @@ const ChessRoom: React.FC<ChessRoomProps> = ({ playerColor, roomId }) => {
 
   return (
     <div>
-      <h4>Playing as {playerColor}</h4>
       <ChessGame
         playerColor={playerColor}
         sendMove={sendMove}

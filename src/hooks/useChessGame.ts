@@ -11,6 +11,23 @@ const useChessGame = (
   console.log("USE CHESS GAME RECEIVED MOVE" + receivedMove);
   const [game, setGame] = useState(new Chess());
   const [player, setPlayer] = useState(playerColor);
+  const [soundUrl, setSoundUrl] = useState("");
+  const moveURL =
+    "http://drupal.chesswho.org/sites/default/files/2024-10/move-self.mp3";
+  const captureURL =
+    "http://drupal.chesswho.org/sites/default/files/2024-10/capture.mp3";
+  const checkURL =
+    "http://drupal.chesswho.org/sites/default/files/2024-10/move-check.mp3";
+  const castleURL =
+    "http://drupal.chesswho.org/sites/default/files/2024-10/castle.mp3";
+
+  const playChessSound = () => {
+    console.log("PLAY CHESS SOUND " + soundUrl);
+    const audio = new Audio(moveURL);
+    audio.play().catch((error) => {
+      console.error("Error playing sound:", error);
+    });
+  };
 
   const getCurrentGame = useCallback(() => {
     return game;
@@ -35,11 +52,11 @@ const useChessGame = (
         const result = currentGame.move({ from, to, promotion });
 
         if (result) {
-          console.log("INSIDE RESULT");
           const pgn = currentGame.pgn();
           const newGame = new Chess();
           newGame.loadPgn(pgn);
           setGame(newGame);
+          playChessSound();
           return true; // Move was successful
         } else {
           console.log("Invalid move");

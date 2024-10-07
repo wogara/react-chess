@@ -13,7 +13,10 @@ function App() {
   const handleCreateRoom = async () => {
     console.log("Attempting to create a room...");
     try {
-      const response = await fetch("https://chesswho.org" + "/api/create-room", { method: "POST" });
+      const response = await fetch(
+        "https://chesswho.org" + "/api/create-room",
+        { method: "POST" },
+      );
 
       if (!response.ok) {
         throw new Error(`Error: ${response.status} ${response.statusText}`);
@@ -37,7 +40,7 @@ function App() {
   useEffect(() => {
     const fetchTest = async () => {
       try {
-        const response = await fetch("https://chesswho.org"+ "/api/message");
+        const response = await fetch("https://chesswho.org" + "/api/message");
         const data: ApiResponse = await response.json();
         console.log(data.message);
       } catch (error: any) {
@@ -58,6 +61,8 @@ function App() {
             <Sidebar
               handleCreateRoom={handleCreateRoom}
               handleJoinRoom={handleJoinRoom}
+              roomId={roomId}
+              setRoomID={setRoomId}
             />
           </div>
         </div>

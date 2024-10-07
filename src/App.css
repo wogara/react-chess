@@ -5,8 +5,8 @@ html, body, #root {
 }
 
 body {
-  background-color: black !important;
 }
+
 
 #root {
   /* max-width:100%; */
