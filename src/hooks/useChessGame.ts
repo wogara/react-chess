@@ -51,6 +51,9 @@ const useChessGame = (
       try {
         const result = currentGame.move({ from, to, promotion });
 
+        console.log("FROM : " + from);
+        console.log("TO : " + to);
+
         if (result) {
           const pgn = currentGame.pgn();
           const newGame = new Chess();
