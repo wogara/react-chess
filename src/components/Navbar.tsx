@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 const Navbar = ({ userData, onLogout }) => {
   return (
-    <nav className="bg-mantle p-4 shadow-lg fixed top-0 left-0 w-full z-50">
+    <nav className="bg-mantle p-4 shadow-lg top-0 left-0 w-full z-50">
       <div className="container mx-auto flex justify-between items-center">
         <Link
           to="/"

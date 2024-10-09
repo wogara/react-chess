@@ -33,7 +33,7 @@ interface ChessRoomProps {
   roomId: String;
   playerColor: String;
 }
-const ChessRoom: React.FC<ChessRoomProps> = ({ playerColor, roomId }) => {
+const ChessRoom: React.FC<ChessRoomProps> = ({ playerColor, roomId, initialMoves }) => {
   const [receivedMove, setReceivedMove] = useState(null);
 
   useEffect(() => {
@@ -96,6 +96,7 @@ const ChessRoom: React.FC<ChessRoomProps> = ({ playerColor, roomId }) => {
   return (
     <div>
       <ChessGame
+        initialMoves={initialMoves}
         playerColor={playerColor}
         sendMove={sendMove}
         receivedMove={receivedMove}

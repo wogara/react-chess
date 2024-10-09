@@ -16,11 +16,15 @@ const ChessGame: React.FC<ChessGameProps> = ({
   playerColor,
   sendMove,
   receivedMove,
+  initialMoves,
 }) => {
+
+  console.log("CHESS GAME RERENDER");
   const { getCurrentGame, resetGame, isGameOver, onDrop } = useChessGame(
     playerColor,
     sendMove,
     receivedMove,
+    initialMoves,
   );
 
   const currentFen = getCurrentGame().fen();
@@ -31,8 +35,8 @@ const ChessGame: React.FC<ChessGameProps> = ({
         position={currentFen}
         onPieceDrop={onDrop}
         boardOrientation={playerColor}
-        customDarkSquareStyle={{ backgroundColor: colors.surface2 }}
-        customLightSquareStyle={{ backgroundColor: colors.surface0 }}
+        customDarkSquareStyle={{ backgroundColor: colors.surface0 }}
+        customLightSquareStyle={{ backgroundColor: colors.surface2 }}
       />
     </div>
   );

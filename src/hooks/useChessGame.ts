@@ -7,6 +7,7 @@ const useChessGame = (
   playerColor: String,
   sendMove?: (from: String, to: String) => void,
   receivedMove?: Move | null,
+  initialMoves?: Array<any>,
 ) => {
   console.log("USE CHESS GAME RECEIVED MOVE" + receivedMove);
   const [game, setGame] = useState(new Chess());
@@ -21,6 +22,23 @@ const useChessGame = (
   const castleURL =
     "http://drupal.chesswho.org/sites/default/files/2024-10/castle.mp3";
 
+  useEffect(() => {
+    // if (initialMoves && initialMoves.length > 0) {
+    //
+    console.log("INITIAL MOVES" + initialMoves[0]);
+    if (Array.isArray(initialMoves)) {
+      const newGame = new Chess();
+      initialMoves.forEach((move) => {
+        newGame.move({
+          from: move.from,
+          to: move.to,
+          promotion: move.promotion,
+        });
+      });
+      setGame(newGame); // Set the game with the loaded moves
+    }
+  }, [initialMoves]);
+
   const playChessSound = () => {
     console.log("PLAY CHESS SOUND " + soundUrl);
     const audio = new Audio(moveURL);
@@ -33,7 +51,7 @@ const useChessGame = (
     return game;
   }, [game]);
 
-  const undoMove = useCallback(() => {});
+  const undoMove = useCallback(() => { });
 
   const makeAMove = useCallback(
     ({
