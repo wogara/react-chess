@@ -19,13 +19,10 @@ const Sidebar: React.FC<SidebarProps> = ({
   onSendGameRequest,
   userData,
 }) => {
-  console.log("SIDE BAR USER DATA EMAIL: " + userData.email);
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [userGames, setUserGames] = useState([]);
   useEffect(() => {
-    console.log("FETCH USERS");
-
     const fetchUsers = async () => {
       try {
         // Check if the access_token is available
@@ -103,11 +100,9 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   const handleSendRequest = () => {
     if (selectedUser) {
-      console.log("selectedUser email" + selectedUser);
       onSendGameRequest(selectedUser.label); // Send email of selected user
     }
   };
-  console.log("ROOM ID" + roomId);
   return (
     <div className="ml-4 p-6 bg-blue shadow-lg rounded-lg flex flex-col justify-center items-center">
       <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">

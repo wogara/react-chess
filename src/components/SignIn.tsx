@@ -12,7 +12,6 @@ const SignIn = ({ onLogin }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("TRY SIGN IN");
       await authService.login(email, password);
       onLogin(); // Callback to update app state after login
       navigate("/");

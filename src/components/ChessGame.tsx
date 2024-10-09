@@ -19,7 +19,6 @@ const ChessGame: React.FC<ChessGameProps> = ({
   initialMoves,
 }) => {
 
-  console.log("CHESS GAME RERENDER");
   const { getCurrentGame, resetGame, isGameOver, onDrop } = useChessGame(
     playerColor,
     sendMove,

@@ -38,17 +38,12 @@ const ChessRoom: React.FC<ChessRoomProps> = ({ playerColor, roomId, initialMoves
 
   useEffect(() => {
     if (!roomId.length) {
-      console.log("NO ROOM ID");
       return;
     }
 
-    console.log("LISTEN FOR CHANNEL: " + roomId);
     const channel = window.Echo.channel(`public-channel`).listen(
       "MoveEvent",
       (e: any) => {
-        console.log("EVENT");
-        console.log("IDK event received:", e);
-        console.log(e.data.from);
         setReceivedMove({ from: e.data.from, to: e.data.to });
       },
     );
@@ -63,8 +58,6 @@ const ChessRoom: React.FC<ChessRoomProps> = ({ playerColor, roomId, initialMoves
   }, [playerColor]);
   const sendMove = async (from: String, to: String) => {
     //
-    console.log("Attempting to send move..." + roomId);
-    console.log("MOVE from: " + from + " to: " + to);
     try {
       const response = await fetch("https://chesswho.org/api/move", {
         method: "POST",
@@ -87,7 +80,6 @@ const ChessRoom: React.FC<ChessRoomProps> = ({ playerColor, roomId, initialMoves
       }
 
       const data = await response.json();
-      console.log("move sent successfully:", data);
     } catch (error) {
       console.error("Failed to create room:", error);
     }

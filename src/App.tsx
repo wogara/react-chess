@@ -33,16 +33,25 @@ function App() {
         ...prevData, // Preserve existing user data
         ...parsedUserData, // Add the new user data
       }));
-      console.log("User data:", parsedUserData);
     }
   };
 
   const handleRegister = () => {
     setIsAuthenticated(true);
+    const userData = localStorage.getItem("user");
+    // Check if userData is not null
+    if (userData) {
+      // Parse the JSON string back into an object
+      const parsedUserData = JSON.parse(userData);
+      // Use the spread operator to set the user data
+      setUserStateData((prevData) => ({
+        ...prevData, // Preserve existing user data
+        ...parsedUserData, // Add the new user data
+      }));
+    }
   };
 
   const handleCreateRoom = async () => {
-    console.log("Attempting to create a room...");
     try {
       const response = await fetch("https://chesswho.org/api/create-room", {
         method: "POST",
@@ -57,7 +66,6 @@ function App() {
       }
 
       const data = await response.json();
-      console.log("Room created successfully:", data.roomID);
       setRoomId(data.roomID);
       setPlayerColor("white"); // Creator is white
     } catch (error) {
@@ -84,7 +92,6 @@ function App() {
         }
 
         const data = await response.json();
-        console.log("Room created successfully:", data.roomID);
         setRoomId(data.roomID);
         setPlayerColor("white"); // Creator is white
       } catch (error) {
@@ -97,7 +104,6 @@ function App() {
 
   // Logic for joining a room can set player color to black
   const handleJoinRoom = async (roomID: string) => {
-    console.log("handle join room");
     try {
       // Fetch the moves from the API using roomID as game_id
       const response = await fetch(
@@ -116,9 +122,7 @@ function App() {
 
       const data = await response.json();
 
-      // Assuming data.moves contains the list of moves
       console.log("Moves fetched successfully:", data.moves);
-      //data.moves looks like [{from: 'e2', to: 'e4', played_by: 'white', promotion: 'no'}];;
       setFetchedMoves(data.moves);
       if (data.white_email) {
         if (data.white_email === userStateData.email) {
@@ -142,7 +146,6 @@ function App() {
       try {
         const response = await fetch("https://chesswho.org/api/message");
         const data: ApiResponse = await response.json();
-        console.log(data.message);
       } catch (error: any) {
         console.error("Error fetching api/message", error);
       }
@@ -153,8 +156,6 @@ function App() {
   // Load authentication and user data from localStorage when the app mounts
   useEffect(() => {
     const storedUserData = localStorage.getItem("user");
-
-    console.log("STORE USER DATA REFFRESH");
 
     if (storedUserData) {
       setUserStateData(JSON.parse(storedUserData));
@@ -169,7 +170,7 @@ function App() {
   return (
     <Router>
       <Navbar onLogout={handleLogout} userData={userStateData} />
-      <div className="pt-2">
+      <div className="flex flex-col h-screen pt-4">
         <Routes>
           <Route
             path="/signin"
@@ -184,8 +185,8 @@ function App() {
           <Route
             path="/"
             element={
-              <div className="flex justify-center items-center h-screen w-screen">
-                <div className="flex max-w-screen-lg w-full">
+              <div className="flex-grow flex justify-center items-center">
+                <div className="flex max-w-screen-lg w-full h-full">
                   <div className="flex-grow w-2/3">
                     <ChessRoom
                       initialMoves={fetchedMoves}

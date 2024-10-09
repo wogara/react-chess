@@ -9,7 +9,6 @@ const useChessGame = (
   receivedMove?: Move | null,
   initialMoves?: Array<any>,
 ) => {
-  console.log("USE CHESS GAME RECEIVED MOVE" + receivedMove);
   const [game, setGame] = useState(new Chess());
   const [player, setPlayer] = useState(playerColor);
   const [soundUrl, setSoundUrl] = useState("");
@@ -23,9 +22,6 @@ const useChessGame = (
     "http://drupal.chesswho.org/sites/default/files/2024-10/castle.mp3";
 
   useEffect(() => {
-    // if (initialMoves && initialMoves.length > 0) {
-    //
-    console.log("INITIAL MOVES" + initialMoves[0]);
     if (Array.isArray(initialMoves)) {
       const newGame = new Chess();
       initialMoves.forEach((move) => {
@@ -40,7 +36,6 @@ const useChessGame = (
   }, [initialMoves]);
 
   const playChessSound = () => {
-    console.log("PLAY CHESS SOUND " + soundUrl);
     const audio = new Audio(moveURL);
     audio.play().catch((error) => {
       console.error("Error playing sound:", error);
@@ -63,14 +58,10 @@ const useChessGame = (
       to: string;
       promotion?: string;
     }) => {
-      console.log("GOT INTO MAKE MOVE");
       const currentGame = getCurrentGame();
 
       try {
         const result = currentGame.move({ from, to, promotion });
-
-        console.log("FROM : " + from);
-        console.log("TO : " + to);
 
         if (result) {
           const pgn = currentGame.pgn();
@@ -80,11 +71,9 @@ const useChessGame = (
           playChessSound();
           return true; // Move was successful
         } else {
-          console.log("Invalid move");
           return false; // Move failed (e.g., invalid move)
         }
       } catch (error) {
-        console.error("Move failed with error:", error);
         return false; // Return false if an exception occurs
       }
     },
@@ -118,11 +107,9 @@ const useChessGame = (
   // UseEffect to handle the receivedMove
   useEffect(() => {
     if (receivedMove) {
-      console.log("Received Move:", receivedMove);
 
       // Only make the move if from and to are defined
       if (receivedMove.from && receivedMove.to) {
-        console.log("INSIDE IF " + receivedMove);
         makeAMove(receivedMove);
       } else {
         console.error("Invalid move received:", receivedMove);

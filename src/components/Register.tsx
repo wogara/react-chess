@@ -1,4 +1,5 @@
 //@ts-nocheck
+import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { Link } from "react-router-dom"; // Import Link for navigation
 import authService from "../services/authService"; // Ensure this points to your auth service
@@ -8,12 +9,14 @@ const Register = ({ onRegister }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await authService.register(name, email, password, passwordConfirmation);
       onRegister(); // Callback to update app state after registration
+      navigate("/");
     } catch (error) {
       console.error("Registration failed:", error);
     }
